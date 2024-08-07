@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:super_cupertino_navigation_bar/utils/transitionable_navigation_bar.dart';
 
 /// Returns `child` wrapped with background and a bottom border if background color
@@ -16,40 +15,8 @@ Widget wrapWithBackground({
   required Color backgroundColor,
   Brightness? brightness,
   required Widget child,
-  bool updateSystemUiOverlay = true,
 }) {
   Widget result = child;
-  if (updateSystemUiOverlay) {
-    final bool isDark = backgroundColor.computeLuminance() < 0.179;
-    final Brightness newBrightness =
-        brightness ?? (isDark ? Brightness.dark : Brightness.light);
-    final SystemUiOverlayStyle overlayStyle;
-    switch (newBrightness) {
-      case Brightness.dark:
-        overlayStyle = SystemUiOverlayStyle.light;
-        break;
-      case Brightness.light:
-        overlayStyle = SystemUiOverlayStyle.dark;
-        break;
-    }
-    // [SystemUiOverlayStyle.light] and [SystemUiOverlayStyle.dark] set some system
-    // navigation bar properties,
-    // Before https://github.com/flutter/flutter/pull/104827 those properties
-    // had no effect, now they are used if there is no AnnotatedRegion on the
-    // bottom of the screen.
-    // For backward compatibility, create a `SystemUiOverlayStyle` without the
-    // system navigation bar properties.
-    result = AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: overlayStyle.statusBarColor,
-        statusBarBrightness: overlayStyle.statusBarBrightness,
-        statusBarIconBrightness: overlayStyle.statusBarIconBrightness,
-        systemStatusBarContrastEnforced:
-            overlayStyle.systemStatusBarContrastEnforced,
-      ),
-      child: result,
-    );
-  }
   final DecoratedBox childWithBackground = DecoratedBox(
     decoration: BoxDecoration(
       border: border,

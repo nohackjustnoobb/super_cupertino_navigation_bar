@@ -406,42 +406,49 @@ class _SuperScaffoldState extends State<SuperScaffold> {
                             Widget childd = Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                AnimatedContainer(
-                                  height: Store.instance.searchBarHasFocus.value
-                                      ? (widget.appBar.searchBar!
-                                                  .animationBehavior ==
-                                              SearchBarAnimationBehavior.top
-                                          ? MediaQuery.paddingOf(context).top
-                                          : widget.measures
-                                                  .primaryToolbarHeight +
-                                              MediaQuery.paddingOf(context).top)
-                                      : widget.measures.primaryToolbarHeight +
-                                          MediaQuery.paddingOf(context).top,
-                                  duration: animationStatus ==
-                                          SearchBarAnimationStatus.paused
-                                      ? Duration.zero
-                                      : widget
-                                          .measures.searchBarAnimationDuration,
-                                  child: AnimatedOpacity(
-                                    duration: animationStatus ==
-                                            SearchBarAnimationStatus.paused
-                                        ? Duration.zero
-                                        : widget.measures
-                                            .titleOpacityAnimationDuration,
-                                    opacity: Store
+                                wrapWithBackground(
+                                  backgroundColor:
+                                      widget.appBar.fixedBackgroundColor ??
+                                          Colors.transparent,
+                                  child: AnimatedContainer(
+                                    height: Store
                                             .instance.searchBarHasFocus.value
                                         ? (widget.appBar.searchBar!
                                                     .animationBehavior ==
                                                 SearchBarAnimationBehavior.top
-                                            ? 0
-                                            : 1)
-                                        : 1,
-                                    child: PersistentNavigationBar(
-                                      components: components,
-                                      middleVisible:
-                                          widget.appBar.alwaysShowTitle
-                                              ? null
-                                              : titleOpacity != 0,
+                                            ? MediaQuery.paddingOf(context).top
+                                            : widget.measures
+                                                    .primaryToolbarHeight +
+                                                MediaQuery.paddingOf(context)
+                                                    .top)
+                                        : widget.measures.primaryToolbarHeight +
+                                            MediaQuery.paddingOf(context).top,
+                                    duration: animationStatus ==
+                                            SearchBarAnimationStatus.paused
+                                        ? Duration.zero
+                                        : widget.measures
+                                            .searchBarAnimationDuration,
+                                    child: AnimatedOpacity(
+                                      duration: animationStatus ==
+                                              SearchBarAnimationStatus.paused
+                                          ? Duration.zero
+                                          : widget.measures
+                                              .titleOpacityAnimationDuration,
+                                      opacity: Store
+                                              .instance.searchBarHasFocus.value
+                                          ? (widget.appBar.searchBar!
+                                                      .animationBehavior ==
+                                                  SearchBarAnimationBehavior.top
+                                              ? 0
+                                              : 1)
+                                          : 1,
+                                      child: PersistentNavigationBar(
+                                        components: components,
+                                        middleVisible:
+                                            widget.appBar.alwaysShowTitle
+                                                ? null
+                                                : titleOpacity != 0,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -977,7 +984,9 @@ class _SuperScaffoldState extends State<SuperScaffold> {
                                 componentsKeys: keys,
                                 backgroundColor:
                                     CupertinoDynamicColor.maybeResolve(
-                                            widget.appBar.backgroundColor,
+                                            widget.appBar
+                                                    .fixedBackgroundColor ??
+                                                widget.appBar.backgroundColor,
                                             context) ??
                                         CupertinoTheme.of(context)
                                             .barBackgroundColor,

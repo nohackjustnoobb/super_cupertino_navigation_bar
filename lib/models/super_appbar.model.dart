@@ -4,23 +4,23 @@ import 'package:super_cupertino_navigation_bar/models/super_large_title.model.da
 import 'package:super_cupertino_navigation_bar/models/super_search_bar.model.dart';
 
 class SuperAppBar {
-  SuperAppBar({
-    this.title,
-    this.actions,
-    this.height = kToolbarHeight,
-    this.leadingWidth,
-    this.leading,
-    this.automaticallyImplyLeading = true,
-    this.titleSpacing = 15,
-    this.previousPageTitle = "Back",
-    this.alwaysShowTitle = false,
-    this.searchBar,
-    this.largeTitle,
-    this.bottom,
-    this.backgroundColor,
-    this.border,
-    this.shadowColor,
-  }) {
+  SuperAppBar(
+      {this.title,
+      this.actions,
+      this.height = kToolbarHeight,
+      this.leadingWidth,
+      this.leading,
+      this.automaticallyImplyLeading = true,
+      this.titleSpacing = 15,
+      this.previousPageTitle = "Back",
+      this.alwaysShowTitle = false,
+      this.searchBar,
+      this.largeTitle,
+      this.bottom,
+      this.backgroundColor,
+      this.border,
+      this.shadowColor,
+      this.fixedBackgroundColor}) {
     searchBar = searchBar ?? SuperSearchBar();
     largeTitle = largeTitle ?? SuperLargeTitle();
     bottom = bottom ?? SuperAppBarBottom();
@@ -116,6 +116,7 @@ class SuperAppBar {
   SuperLargeTitle? largeTitle;
   SuperAppBarBottom? bottom;
   final Color? backgroundColor;
+  final Color? fixedBackgroundColor;
 
   /// {@macro flutter.cupertino.CupertinoNavigationBar.border}
   final Border? border;
